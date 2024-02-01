@@ -17,7 +17,7 @@
                 </tr>
                 <tr>
                     <td>Golfer Score</td>
-                    <td class="text-secondary" v-for="(score, index) in scoreCard" :key="index">{{ parScores[index] + score }}</td>
+                    <td class="text-secondary" v-for="(score, index) in scoreCard" :key="index">{{ (parScores?.[index] ?? 0) + score }}</td>
                     <td class="text-secondary">{{ golferScore }}</td>
                 </tr>
                 <tr>
@@ -58,7 +58,7 @@
     });
 
     const golferScore = computed(() => {
-        return parScores.value.reduce((acc, par, index) => acc + par + props.scoreCard[index], 0);
+        return (parScores.value ?? []).reduce((acc, par, index) => acc + par + (props.scoreCard?.[index] ?? 0), 0);
     });
 
     const totalPar = computed(() => {
