@@ -1,5 +1,5 @@
 // Composables
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHistory, RouteLocationNormalized, RouteLocationNormalizedLoaded, RouteRecordRaw } from "vue-router";
 
 const routes = [
     {
@@ -34,12 +34,18 @@ const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes: validRoutes,
     // Scroll to top when changing routes.
-    scrollBehavior(to, from, savedPosition) {
+    scrollBehavior(
+        to: RouteLocationNormalized,
+        from: RouteLocationNormalizedLoaded,
+        savedPosition: { left?: number; top?: number } | null,
+    ): Promise<false | void | { left?: number; top?: number }> {
         if (to.hash) {
-            return { el: to.hash };
+            const targetElement = document.querySelector(to.hash) as HTMLElement | null;
+            return Promise.resolve({ top: targetElement?.offsetTop || 0 });
         }
 
-        document.getElementById("app").scrollIntoView();
+        // Scroll to the top by default
+        return Promise.resolve({ left: 0, top: 0 });
     },
 });
 
