@@ -1,0 +1,36 @@
+.v-table thead tr th {
+    background-color: #ccd8dc;
+    color: black !important;
+}
+
+.v-table tbody tr td {
+    /* color: #00292f !important; */
+}
+
+.v-table table {
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid #b2cbcf;
+}
+
+.v-table tbody tr:not(:last-child) td {
+    border-bottom: 1px solid #b2cbcf !important;
+}
+
+.v-table th {
+    border-bottom: 0 !important;
+}
+
+.v-table td,
+.v-table th {
+    border-right: 1px solid #b2cbcf;
+}
+
+.v-table td:last-child,
+.v-table th:last-child {
+    border-right: none;
+}
+
+.v-table tbody tr:nth-last-child(2) td {
+    border-bottom: 3px solid #b2cbcf !important;
+}
