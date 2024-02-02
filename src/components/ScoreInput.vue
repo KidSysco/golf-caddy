@@ -3,8 +3,7 @@
         <div v-for="hole in holes" :key="hole">
             <v-text-field
                 v-model="scores[hole - 1]"
-                :rules="[validationRules.required, validationRules.integer, validationRules.intMin(scores[hole - 1], 1)]"
-                min="1"
+                :rules="[validationRules.required, validationRules.integer, validationRules.intMin(scores[hole - 1] as any, 1)]"
                 :label="`Hole ${hole}`"
                 hide-details="auto"
                 dense
@@ -26,7 +25,7 @@
     const form2 = ref<any>(null);
     const isForm2Valid = ref(true);
 
-    defineProps<Props>();
+    const { holes } = defineProps<Props>();
     const emit = defineEmits<{
         (event: "scoresEntered", scores: number[]): void;
     }>();
