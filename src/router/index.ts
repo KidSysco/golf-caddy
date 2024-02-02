@@ -1,5 +1,5 @@
 // Composables
-import { createRouter, createWebHistory, RouteLocationNormalized, RouteLocationNormalizedLoaded, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHistory, RouteLocationNormalized, RouteLocationNormalizedLoaded } from "vue-router";
 
 const routes = [
     {
@@ -24,15 +24,22 @@ const routes = [
             },
         ],
     },
-    // helps when routes are missing required params
-    { path: "/:catchAll(.*)", redirect: "/" },
+    {
+        path: "/:pathMatch(.*)*",
+        component: () => import("@/layouts/default/Default.vue"),
+        children: [
+            {
+                path: "",
+                name: "not-found",
+                component: () => import(/* webpackChunkName: "default" */ "@/views/FileNotFound.vue"),
+            },
+        ],
+    },
 ];
-
-const validRoutes: RouteRecordRaw[] = routes.filter((route) => route !== undefined) as RouteRecordRaw[];
 
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
-    routes: validRoutes,
+    routes,
     // Scroll to top when changing routes.
     scrollBehavior(
         to: RouteLocationNormalized,
